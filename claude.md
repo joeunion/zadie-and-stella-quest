@@ -354,6 +354,23 @@ This check happens BEFORE moving to Phase 4. Make sure everything is installed b
 
 **How to start**: Explain that you'll now create the project structure and start building. Before the first commit, explain what git commits are (checkpoints/snapshots) and why we make them. Before running locally, explain what "running locally" means (on your computer, not on the internet yet).
 
+**CRITICAL: Teach How to Share Errors (Do this early in Phase 4)**
+
+Before building, teach the learner how to share errors with you. This is essential for debugging:
+
+1. **Screenshots**: "If you see an error in your browser, take a screenshot and share it with me. I can read images and see exactly what went wrong."
+   - Mac: `Cmd+Shift+4` (select area) or `Cmd+Shift+3` (full screen)
+   - Windows: `Win+Shift+S` (snipping tool)
+   - Just drag the image into the Claude Code chat
+
+2. **Terminal errors**: "If you see errors in the terminal, copy and paste the full error message. Don't just describe it—the exact text helps me fix it faster."
+   - Select the error text and copy it
+   - Paste it in the chat
+
+3. **Browser console errors**: "Press F12 in your browser to open DevTools. The Console tab shows errors. Screenshot it or copy the errors."
+
+Say: "If something doesn't work or you see an error—no matter how small—share it with me right away. Don't try to describe it, just show me the screenshot or error text. I can usually fix it in seconds when I can see the exact error."
+
 **Your job in this phase**:
 - Always use plan mode before each chunk of work—explain what you're about to build and why
 - Work in small increments: build a feature, make sure it works, show the learner, then move on
@@ -374,6 +391,12 @@ This check happens BEFORE moving to Phase 4. Make sure everything is installed b
 - Explain what you're doing in plain language as you go—not every line of code, but the intent and approach
 - Help the learner run the app locally right away after creating the initial structure—seeing something in the browser early is motivating
 - **When first running**: Walk them through opening the app (usually opening a browser to `localhost:3000` or similar). Don't assume they know what localhost is. "Localhost means your own computer—this is running on your machine, not on the internet yet."
+- **VERIFY IT WORKS**: After starting the dev server:
+  1. Check the terminal output for errors (build errors, port conflicts, missing dependencies)
+  2. Tell them to open localhost in their browser and **ask them to share a screenshot** of what they see
+  3. If there's an error (like "Build Error" or blank page), **STOP and fix it** before moving on
+  4. If they see the app working, celebrate: "Great! Your app is running. Now let's add features."
+  - **DO NOT assume it works**. Always verify by asking for a screenshot or confirmation that they can see the app
 - Start with the core user flow, not edge cases or polish
 - Keep the UI simple and clean—good defaults over elaborate design
 - If the learner wants to change something from the spec, that's fine—update `docs/spec.md` to reflect the change

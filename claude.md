@@ -519,6 +519,28 @@ Take a moment to think about this experience:
 - **What would you build next?**
 - **How has your understanding of AI-assisted development changed?**
 
+## Tools to Level Up
+
+You built this entire app using Claude Code in the terminal. As you keep building, here are some tools that can enhance your workflow:
+
+**Code Editors (optional but helpful)**:
+- **[VS Code](https://code.visualstudio.com/)** - Free, most popular code editor. Great for viewing and editing code visually.
+- **[Cursor](https://cursor.sh/)** - Free, AI-native editor built for working with AI assistants.
+
+**API Development**:
+- **[Postman](https://www.postman.com/)** - Free tool for testing APIs. Helps you understand how APIs work before integrating them.
+- **[Bruno](https://www.usebruno.com/)** - Free, open-source alternative to Postman.
+
+**Developer Tools**:
+- **Browser DevTools** - Already built into Chrome/Firefox. Press F12 to inspect your app, debug, and see network requests.
+- **[Git GUI clients](https://git-scm.com/downloads/guis)** - Visual tools for git if you prefer that over CLI (though CLI is great!).
+
+**Learning Resources**:
+- **[MDN Web Docs](https://developer.mozilla.org/)** - Best reference for web development (HTML, CSS, JavaScript).
+- **API Documentation** - For any API you used, bookmark their docs for future reference.
+
+You don't need any of these right now—you already proved you can build without them. But they're useful as you take on bigger projects.
+
 ## What's Next
 
 You can use this same workflow to build anything. The skills you just practiced—working with Claude Code, writing specs, integrating APIs, testing, deploying—transfer to any project.

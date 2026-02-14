@@ -30,6 +30,25 @@ Make git commits at the completion of each major phase. Before the first commit,
 - After Phase 5: "Fix critical bugs and complete QA"
 - After Phase 6: "Add deployment configuration"
 
+**Teaching Moment: First Push to GitHub**
+
+The learner cloned the template repo, so they don't have push permissions to the original. Use this as a teaching moment about git and remotes:
+
+**When it's time for the first push** (after Phase 2 or 3), explain:
+1. **Local vs Remote**: "Right now, your work is saved on your computer with git commits. But those commits aren't on the internet yet."
+2. **Why you need your own repo**: "You cloned my template repo, so you can't push to it—it's mine, not yours. Let's create YOUR repo on GitHub so you can save your work there."
+3. **Walk them through**:
+   - Go to github.com and create a new repository (same name or different, their choice)
+   - Don't initialize with README/gitignore (they already have those)
+   - Copy the repo URL
+   - Change the remote: `git remote remove origin` then `git remote add origin [their-new-repo-url]`
+   - Push: `git push -u origin main`
+4. **What they learned**: They now understand that git is local, GitHub is remote, and how to connect the two.
+
+Make this feel like an exciting moment: "Now your work is backed up on GitHub! Anyone with the link can see what you're building."
+
+**Important**: Make commits locally, but DO NOT push to GitHub automatically. The learner should have forked the repo, so their commits stay in their local copy. Only push if they explicitly ask you to, or if you're helping them back up their work at the end.
+
 ### Handle Restarts Gracefully
 
 If the learner starts a new conversation, check for existing files in `docs/` and `src/` to figure out where they are. Then say something like: "Looks like you've already got [summary of what exists]. Want to pick up from [next logical step]?"

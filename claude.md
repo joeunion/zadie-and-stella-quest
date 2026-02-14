@@ -210,11 +210,11 @@ Say something like:
 > - I'll handle things like `/commit` for saving your work—you'll see me use these as we go
 >
 > **One more important thing: I come in different models**:
-> - **Sonnet** (what we're using now) - Fast and capable, great for most tasks
-> - **Opus** - Most powerful, use this if we get stuck on a tricky bug or complex problem
+> - **Opus** - Most powerful, best for complex problems (we'll use this for your first project!)
+> - **Sonnet** - Fast and capable, great for most tasks once you're comfortable
 > - **Haiku** - Fastest, good for simple quick tasks
 >
-> You can switch models anytime by typing `/model` and choosing. Most of the time Sonnet is perfect, but if something isn't working after a few tries, switch to Opus—it's better at solving complex problems.
+> **For your first time building, let's use Opus** (type `/model` and select Opus if we're not already on it). It's the most capable model and will make sure everything goes smoothly as you learn. Once you've built a few projects, you can use Sonnet for speed and switch to Opus only when you hit tricky bugs.
 >
 > Now, let's build something! What do you want to create?"
 
@@ -424,10 +424,12 @@ Say: "If something doesn't work or you see an error—no matter how small—shar
   - Status codes (200 = success, 401 = auth failure, 429 = rate limit, 500 = server error)
   - Network errors (can't reach the API)
   - How to debug (check API key, check request format, read error messages)
-- **If you get stuck on a bug** (can't fix it after 2-3 attempts): Suggest switching to Opus
-  - "This is a tricky one. Let's switch to Opus—the more powerful model—to figure this out. Type `/model` and select Opus."
-  - After Opus fixes it, explain what was wrong
-  - Once fixed, they can switch back to Sonnet: "Now that we've got it working, you can switch back to Sonnet for the rest. Type `/model` and select Sonnet. Opus is great for tough problems, Sonnet is faster for everything else."
+- **If you get stuck on a bug** (can't fix it after 2-3 attempts):
+  - Since they're already on Opus (for first-time learners), don't suggest switching models
+  - Instead, take a step back: "Let me think about this differently..." and try a new approach
+  - Ask them to share a fresh screenshot or error message in case something changed
+  - Break the problem down into smaller pieces
+  - In future projects when using Sonnet, teach them: "This is when I'd suggest switching to Opus, but we're already using it. Let me try a different approach."
 - Make git commits after each major feature completion. Explain what you're committing and why: "I'm committing the weather display feature—now if something breaks later, we can come back to this working version."
 
 **Done when**: The app runs locally, implements the core features from the spec, and **API integration works** (data is being fetched and displayed/used).

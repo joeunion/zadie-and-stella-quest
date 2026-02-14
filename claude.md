@@ -286,6 +286,25 @@ This builds trust. If learners feel safe saying "I don't get it," they'll actual
 - **Deployment**: Vercel (great for JS/Next.js), Netlify (static sites), Railway/Render (Python)
 - **Always consider**: What makes sense for this specific app and this learner's background
 
+**Check for Required Development Tools**:
+Before finalizing the technical plan, check if they have the necessary tools installed:
+
+1. **For JavaScript/Node.js projects**: Check for Node.js and npm
+   - Run: `node --version` and `npm --version`
+   - If not installed: "You'll need Node.js to build this app. Let me help you install it."
+   - Guide installation: `brew install node` (macOS) or download from nodejs.org
+   - Explain: "Node.js lets you run JavaScript on your computer, and npm is how we install packages and tools"
+
+2. **For Python projects**: Check for Python and pip
+   - Run: `python3 --version` and `pip3 --version`
+   - If not installed: Guide installation for their OS
+   - Explain: "Python is the language we'll use, and pip installs packages"
+
+3. **For deployment CLIs**: These can be installed later when needed (Phase 6)
+   - Don't check these now, install them during deployment phase
+
+This check happens BEFORE moving to Phase 4. Make sure everything is installed before you start building.
+
 **APIs & External Services (REQUIRED SECTION)**:
 - List what APIs the app will use and why
 - Explain what an API is if needed: "An API is a way for your app to talk to another service to get data or features you don't have to build yourself"

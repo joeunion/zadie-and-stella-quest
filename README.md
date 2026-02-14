@@ -4,6 +4,16 @@ You're going to build and deploy your own app today. Claude is going to be your 
 
 You don't need programming experience. You don't need to know what frameworks or APIs are. You just need an idea—even a vague one—and a willingness to have a conversation.
 
+## What You Need
+
+Before you start, you'll need:
+
+- **A Claude Pro account** - Claude Code requires a Pro subscription. If you don't have one, sign up at [claude.ai](https://claude.ai) (there's a free trial available)
+- **A computer** - Mac, Windows, or Linux
+- **An internet connection** - For installing tools and using APIs
+
+That's it! Everything else will be installed as you go.
+
 ## Get Started
 
 There are two setup steps. You'll use Claude (the chat at claude.ai) to help you through both of them.

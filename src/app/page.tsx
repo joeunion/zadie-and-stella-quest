@@ -1,8 +1,16 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { getDadMessage } from "@/lib/dadMessages";
 
 export default function Home() {
+  const [dadGreeting, setDadGreeting] = useState("");
+
+  useEffect(() => {
+    setDadGreeting(getDadMessage("welcome"));
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-600 via-pink-500 to-orange-400 flex flex-col items-center justify-center p-8 text-white">
       {/* Stars background decoration */}
@@ -24,6 +32,24 @@ export default function Home() {
       </div>
 
       <div className="relative z-10 text-center">
+        {/* Dad's welcome speech bubble */}
+        {dadGreeting && (
+          <div className="mb-8 flex justify-center animate-bounce-in">
+            <div
+              className="text-xl md:text-2xl font-bold text-white text-center animate-float"
+              style={{
+                background: "linear-gradient(135deg, #7c3aed, #db2777)",
+                borderRadius: "1.5rem",
+                padding: "1rem 2rem",
+                boxShadow: "0 6px 20px rgba(124, 58, 237, 0.5)",
+                border: "3px solid rgba(255, 255, 255, 0.3)",
+              }}
+            >
+              💜 Dad says: {dadGreeting}
+            </div>
+          </div>
+        )}
+
         {/* Title */}
         <div className="animate-float mb-8">
           <h1 className="text-5xl md:text-7xl font-bold mb-4 drop-shadow-lg">

@@ -1,14 +1,21 @@
 "use client";
 
-import { use } from "react";
+import { use, useState, useEffect } from "react";
 import Link from "next/link";
 import { levels } from "@/lib/levels";
+import { getDadMessage } from "@/lib/dadMessages";
 
 export default function LevelComplete({ params }: { params: Promise<{ level: string }> }) {
   const { level: levelParam } = use(params);
   const levelId = parseInt(levelParam);
   const levelConfig = levels.find((l) => l.id === levelId);
   const nextLevel = levels.find((l) => l.id === levelId + 1);
+
+  const [dadCelebration, setDadCelebration] = useState("");
+
+  useEffect(() => {
+    setDadCelebration(getDadMessage("celebration"));
+  }, []);
 
   if (!levelConfig) return null;
 
@@ -33,6 +40,24 @@ export default function LevelComplete({ params }: { params: Promise<{ level: str
       </div>
 
       <div className="relative z-10 text-center">
+        {/* Dad's celebration speech bubble */}
+        {dadCelebration && (
+          <div className="mb-8 flex justify-center animate-bounce-in" style={{ animationDelay: "0.2s" }}>
+            <div
+              className="text-xl md:text-2xl font-bold text-white text-center"
+              style={{
+                background: "linear-gradient(135deg, #7c3aed, #db2777)",
+                borderRadius: "1.5rem",
+                padding: "1rem 2rem",
+                boxShadow: "0 6px 20px rgba(124, 58, 237, 0.5)",
+                border: "3px solid rgba(255, 255, 255, 0.3)",
+              }}
+            >
+              💜 Dad says: {dadCelebration}
+            </div>
+          </div>
+        )}
+
         {/* Big emoji */}
         <div className="text-8xl mb-6 animate-bounce-in">
           {levelConfig.emoji}

@@ -73,10 +73,11 @@ export default function PlayLevel({ params }: { params: Promise<{ level: string 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [levelConfig, levelId]);
 
-  // Generate first problem once initialized
+  // Generate first problem once initialized and show a Dad greeting
   useEffect(() => {
     if (initialized && levelConfig) {
       showNextProblem();
+      showDadBubble("encouragement");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialized]);
@@ -141,8 +142,8 @@ export default function PlayLevel({ params }: { params: Promise<{ level: string 
       const newStars = newProgress.stars[levelId] || 0;
       setStars(newStars);
 
-      // Dad message: after 3rd correct answer in a row
-      if (newStreak === 3) {
+      // Dad message: after every 3rd correct answer in a row
+      if (newStreak > 0 && newStreak % 3 === 0) {
         showDadBubble("encouragement");
       }
 
@@ -162,10 +163,8 @@ export default function PlayLevel({ params }: { params: Promise<{ level: string 
       }
     } else {
       setCorrectStreak(0);
-      // Dad comfort message ~50% of the time
-      if (Math.random() < 0.5) {
-        showDadBubble("comfort");
-      }
+      // Dad comfort message every time they get one wrong
+      showDadBubble("comfort");
     }
 
     // Move to next problem after a delay

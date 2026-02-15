@@ -5,7 +5,7 @@ const anthropic = new Anthropic();
 
 export async function POST(request: NextRequest) {
   try {
-    const { correctCount, totalCount, averageTime, currentDifficulty, operation } =
+    const { correctCount, totalCount, averageTime, currentDifficulty, operation, levelId } =
       await request.json();
 
     const message = await anthropic.messages.create({
@@ -14,17 +14,16 @@ export async function POST(request: NextRequest) {
       messages: [
         {
           role: "user",
-          content: `You are the difficulty engine for a kids' math game. A 7-year-old just answered ${correctCount} out of ${totalCount} ${operation} problems correctly. Their average response time was ${averageTime} seconds. Current difficulty is "${currentDifficulty}".
+          content: `You are the difficulty engine for a kids' math game. A child just answered ${correctCount} out of ${totalCount} ${operation} problems correctly on level ${levelId || "unknown"}. Their average response time was ${averageTime} seconds. Current difficulty is "${currentDifficulty}".
 
 Rules:
 - If they got 80%+ right AND answered fast (under 5 seconds avg), increase difficulty
 - If they got less than 50% right OR are slow (over 10 seconds avg), decrease difficulty
 - Otherwise keep the same difficulty
-- The message should be enthusiastic and fun for a 7-year-old (max 10 words)
+- The message should be enthusiastic and fun for a kid (max 10 words)
 - Never use the word "wrong" — always be encouraging`,
         },
       ],
-      // This forces Claude to respond in exactly the structure we define
       tools: [
         {
           name: "set_difficulty",
@@ -46,11 +45,9 @@ Rules:
           },
         },
       ],
-      // This tells Claude it MUST use the tool — no plain text allowed
       tool_choice: { type: "tool", name: "set_difficulty" },
     });
 
-    // Find the tool use response
     const toolUse = message.content.find((block) => block.type === "tool_use");
     if (toolUse && toolUse.type === "tool_use") {
       const input = toolUse.input as { difficulty: string; message: string };

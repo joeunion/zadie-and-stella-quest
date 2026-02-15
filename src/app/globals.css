@@ -12,7 +12,8 @@ body {
   overflow-x: hidden;
 }
 
-/* Fun bouncy animation for correct answers */
+/* === Core animations === */
+
 @keyframes bounce-in {
   0% { transform: scale(0); opacity: 0; }
   50% { transform: scale(1.2); }
@@ -40,6 +41,63 @@ body {
   100% { transform: scale(1) rotate(360deg); }
 }
 
+/* === World environment animations === */
+
+@keyframes swim {
+  0%, 100% { transform: translateX(0) scaleX(1); }
+  25% { transform: translateX(15px) scaleX(1); }
+  50% { transform: translateX(0) scaleX(-1); }
+  75% { transform: translateX(-15px) scaleX(-1); }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(8px, -5px); }
+  66% { transform: translate(-5px, 3px); }
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes wiggle-celebrate {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+
+@keyframes celebration-burst {
+  0% { transform: scale(0); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* === Dot manipulative animations === */
+
+@keyframes dot-merge {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(var(--merge-x, 0px)); }
+}
+
+@keyframes dot-fade-out {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes dot-appear {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes dot-split {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(var(--split-x, 0px)); }
+}
+
+/* === Animation classes === */
+
 .animate-bounce-in {
   animation: bounce-in 0.5s ease-out forwards;
 }
@@ -60,3 +118,38 @@ body {
   animation: star-pop 0.6s ease-out forwards;
 }
 
+.animate-swim {
+  animation: swim 4s ease-in-out infinite;
+}
+
+.animate-drift {
+  animation: drift 5s ease-in-out infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
+
+.animate-wiggle-celebrate {
+  animation: wiggle-celebrate 0.4s ease-in-out;
+}
+
+.animate-celebration-burst {
+  animation: celebration-burst 0.8s ease-out forwards;
+}
+
+.animate-dot-merge {
+  animation: dot-merge 0.6s ease-in-out forwards;
+}
+
+.animate-dot-fade-out {
+  animation: dot-fade-out 0.5s ease-out forwards;
+}
+
+.animate-dot-appear {
+  animation: dot-appear 0.4s ease-out forwards;
+}
+
+.animate-dot-split {
+  animation: dot-split 0.6s ease-in-out forwards;
+}

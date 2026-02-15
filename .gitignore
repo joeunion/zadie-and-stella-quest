@@ -64,3 +64,4 @@ coverage/
 *.bak
 *.tmp
 *.temp
+.vercel

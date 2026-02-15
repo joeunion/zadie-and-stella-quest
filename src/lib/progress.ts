@@ -1,66 +1,71 @@
+import { getNextLevelId } from "./levels";
+
 export interface GameProgress {
-  unlockedLevels: number[];
-  stars: { [levelId: number]: number };
-  completedLevels: number[];
+  unlockedLevels: string[];
+  stars: { [levelId: string]: number };
+  completedLevels: string[];
 }
 
-const STORAGE_KEY = "zadieStella_progress";
+function storageKey(playerName: string): string {
+  return `zadieStella_progress_${playerName.toLowerCase()}`;
+}
 
 const defaultProgress: GameProgress = {
-  unlockedLevels: [1],
-  stars: { 1: 0, 2: 0, 3: 0, 4: 0 },
+  unlockedLevels: ["1-1"],
+  stars: {},
   completedLevels: [],
 };
 
-export function loadProgress(): GameProgress {
-  if (typeof window === "undefined") return defaultProgress;
+export function loadProgress(playerName: string): GameProgress {
+  if (typeof window === "undefined") return { ...defaultProgress };
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = localStorage.getItem(storageKey(playerName));
     if (saved) return JSON.parse(saved);
   } catch {
     // If anything goes wrong reading storage, start fresh
   }
-  return defaultProgress;
+  return { ...defaultProgress, stars: {} };
 }
 
-export function saveProgress(progress: GameProgress): void {
+export function saveProgress(playerName: string, progress: GameProgress): void {
   if (typeof window === "undefined") return;
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    localStorage.setItem(storageKey(playerName), JSON.stringify(progress));
   } catch {
     // Storage might be full or unavailable — that's OK
   }
 }
 
-export function addStar(levelId: number): GameProgress {
-  const progress = loadProgress();
+export function addStar(playerName: string, levelId: string): GameProgress {
+  const progress = loadProgress(playerName);
   progress.stars[levelId] = (progress.stars[levelId] || 0) + 1;
-  saveProgress(progress);
+  saveProgress(playerName, progress);
   return progress;
 }
 
-export function resetLevelStars(levelId: number): GameProgress {
-  const progress = loadProgress();
+export function resetLevelStars(playerName: string, levelId: string): GameProgress {
+  const progress = loadProgress(playerName);
   progress.stars[levelId] = 0;
-  saveProgress(progress);
+  saveProgress(playerName, progress);
   return progress;
 }
 
-export function resetAllProgress(): GameProgress {
-  saveProgress(defaultProgress);
-  return defaultProgress;
+export function resetAllProgress(playerName: string): GameProgress {
+  const fresh = { ...defaultProgress, stars: {} };
+  saveProgress(playerName, fresh);
+  return fresh;
 }
 
-export function completeLevel(levelId: number): GameProgress {
-  const progress = loadProgress();
+export function completeLevel(playerName: string, levelId: string): GameProgress {
+  const progress = loadProgress(playerName);
   if (!progress.completedLevels.includes(levelId)) {
     progress.completedLevels.push(levelId);
   }
   // Unlock next level
-  const nextLevel = levelId + 1;
-  if (nextLevel <= 4 && !progress.unlockedLevels.includes(nextLevel)) {
+  const nextLevel = getNextLevelId(levelId);
+  if (nextLevel && !progress.unlockedLevels.includes(nextLevel)) {
     progress.unlockedLevels.push(nextLevel);
   }
-  saveProgress(progress);
+  saveProgress(playerName, progress);
   return progress;
 }

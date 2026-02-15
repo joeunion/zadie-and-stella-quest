@@ -1,4 +1,4 @@
-import { Operation } from "./levels";
+import { Operation, NumberRanges } from "./levels";
 
 export type Difficulty = "easy" | "medium" | "hard";
 
@@ -8,6 +8,8 @@ export interface MathProblem {
   choices: number[];
   operation: Operation;
   difficulty: Difficulty;
+  operandA: number;
+  operandB: number;
 }
 
 function randomInt(min: number, max: number): number {
@@ -18,35 +20,25 @@ function generateChoices(correctAnswer: number): number[] {
   const choices = new Set<number>([correctAnswer]);
 
   while (choices.size < 4) {
-    // Generate wrong answers close to the correct one
     const offset = randomInt(1, Math.max(3, Math.abs(correctAnswer) + 2));
     const wrong = correctAnswer + (Math.random() > 0.5 ? offset : -offset);
-    // Only add positive whole numbers for kid-friendliness
     if (wrong >= 0 && Number.isInteger(wrong) && wrong !== correctAnswer) {
       choices.add(wrong);
     }
   }
 
-  // Shuffle the choices
   return Array.from(choices).sort(() => Math.random() - 0.5);
 }
 
-function generateAddition(difficulty: Difficulty): MathProblem {
-  let a: number, b: number;
-  switch (difficulty) {
-    case "easy":
-      a = randomInt(1, 5);
-      b = randomInt(1, 5);
-      break;
-    case "medium":
-      a = randomInt(5, 15);
-      b = randomInt(5, 15);
-      break;
-    case "hard":
-      a = randomInt(10, 50);
-      b = randomInt(10, 50);
-      break;
-  }
+function getRangeForDifficulty(ranges: NumberRanges, difficulty: Difficulty) {
+  return ranges[difficulty];
+}
+
+function generateAddition(difficulty: Difficulty, rangesA: NumberRanges, rangesB: NumberRanges): MathProblem {
+  const rA = getRangeForDifficulty(rangesA, difficulty);
+  const rB = getRangeForDifficulty(rangesB, difficulty);
+  const a = randomInt(rA.min, rA.max);
+  const b = randomInt(rB.min, rB.max);
   const answer = a + b;
   return {
     question: `${a} + ${b}`,
@@ -54,25 +46,17 @@ function generateAddition(difficulty: Difficulty): MathProblem {
     choices: generateChoices(answer),
     operation: "addition",
     difficulty,
+    operandA: a,
+    operandB: b,
   };
 }
 
-function generateSubtraction(difficulty: Difficulty): MathProblem {
-  let a: number, b: number;
-  switch (difficulty) {
-    case "easy":
-      a = randomInt(3, 10);
-      b = randomInt(1, a); // ensure positive result
-      break;
-    case "medium":
-      a = randomInt(10, 25);
-      b = randomInt(5, a);
-      break;
-    case "hard":
-      a = randomInt(25, 50);
-      b = randomInt(10, a);
-      break;
-  }
+function generateSubtraction(difficulty: Difficulty, rangesA: NumberRanges, rangesB: NumberRanges): MathProblem {
+  const rA = getRangeForDifficulty(rangesA, difficulty);
+  const rB = getRangeForDifficulty(rangesB, difficulty);
+  let a = randomInt(rA.min, rA.max);
+  let b = randomInt(rB.min, Math.min(rB.max, a)); // ensure positive result
+  if (b > a) { const tmp = a; a = b; b = tmp; }
   const answer = a - b;
   return {
     question: `${a} - ${b}`,
@@ -80,25 +64,16 @@ function generateSubtraction(difficulty: Difficulty): MathProblem {
     choices: generateChoices(answer),
     operation: "subtraction",
     difficulty,
+    operandA: a,
+    operandB: b,
   };
 }
 
-function generateMultiplication(difficulty: Difficulty): MathProblem {
-  let a: number, b: number;
-  switch (difficulty) {
-    case "easy":
-      a = randomInt(1, 5);
-      b = randomInt(1, 5);
-      break;
-    case "medium":
-      a = randomInt(2, 8);
-      b = randomInt(2, 8);
-      break;
-    case "hard":
-      a = randomInt(3, 12);
-      b = randomInt(3, 12);
-      break;
-  }
+function generateMultiplication(difficulty: Difficulty, rangesA: NumberRanges, rangesB: NumberRanges): MathProblem {
+  const rA = getRangeForDifficulty(rangesA, difficulty);
+  const rB = getRangeForDifficulty(rangesB, difficulty);
+  const a = randomInt(rA.min, rA.max);
+  const b = randomInt(rB.min, rB.max);
   const answer = a * b;
   return {
     question: `${a} × ${b}`,
@@ -106,46 +81,42 @@ function generateMultiplication(difficulty: Difficulty): MathProblem {
     choices: generateChoices(answer),
     operation: "multiplication",
     difficulty,
+    operandA: a,
+    operandB: b,
   };
 }
 
-function generateDivision(difficulty: Difficulty): MathProblem {
-  let a: number, b: number, answer: number;
-  switch (difficulty) {
-    case "easy":
-      b = randomInt(1, 5);
-      answer = randomInt(1, 5);
-      a = b * answer; // ensures whole number division
-      break;
-    case "medium":
-      b = randomInt(2, 8);
-      answer = randomInt(2, 8);
-      a = b * answer;
-      break;
-    case "hard":
-      b = randomInt(2, 10);
-      answer = randomInt(3, 12);
-      a = b * answer;
-      break;
-  }
+function generateDivision(difficulty: Difficulty, rangesA: NumberRanges, rangesB: NumberRanges): MathProblem {
+  const rA = getRangeForDifficulty(rangesA, difficulty);
+  const rB = getRangeForDifficulty(rangesB, difficulty);
+  const b = randomInt(rB.min, rB.max);
+  const answer = randomInt(rA.min, rA.max);
+  const a = b * answer; // ensures whole number division
   return {
     question: `${a} ÷ ${b}`,
     answer,
     choices: generateChoices(answer),
     operation: "division",
     difficulty,
+    operandA: a,
+    operandB: b,
   };
 }
 
-export function generateProblem(operation: Operation, difficulty: Difficulty): MathProblem {
+export function generateProblem(
+  operation: Operation,
+  difficulty: Difficulty,
+  rangesA: NumberRanges,
+  rangesB: NumberRanges,
+): MathProblem {
   switch (operation) {
     case "addition":
-      return generateAddition(difficulty);
+      return generateAddition(difficulty, rangesA, rangesB);
     case "subtraction":
-      return generateSubtraction(difficulty);
+      return generateSubtraction(difficulty, rangesA, rangesB);
     case "multiplication":
-      return generateMultiplication(difficulty);
+      return generateMultiplication(difficulty, rangesA, rangesB);
     case "division":
-      return generateDivision(difficulty);
+      return generateDivision(difficulty, rangesA, rangesB);
   }
 }
